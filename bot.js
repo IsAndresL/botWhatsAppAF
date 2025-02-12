@@ -1,7 +1,13 @@
-const { Client } = require('whatsapp-web.js');
+const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
-const client = new Client();
+const client = new Client({
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }
+});
 
 client.on('qr', (qr) => {
     // Generar y escanear el código QR con tu teléfono
@@ -12,8 +18,6 @@ client.on('qr', (qr) => {
 client.on('ready', () => {
     console.log('¡Cliente está listo! Escaneaste el QR correctamente.');
 });
-
-// Funcionalidad para enviar la lista de comandos
 client.on('message', msg => {
     if (msg.body.toLowerCase() == '!ayuda') {
         const ayuda = `
