@@ -2,7 +2,7 @@ const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
 const client = new Client();
-
+console.log('Bot is starting...');
 client.on('qr', (qr) => {
     // Generar y escanear el código QR con tu teléfono
     qrcode.generate(qr, { small: true });
