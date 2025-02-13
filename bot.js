@@ -19,62 +19,30 @@ client.on('ready', () => {
     console.log('¡Cliente está listo! Escaneaste el QR correctamente.');
 });
 client.on('message', msg => {
-    if (msg.body.toLowerCase() == '!ayuda') {
+    if (msg.body.toLowerCase() == '!help') {
         const ayuda = `
-        *Comandos disponibles:*
-        
-        *'Hola'* - El bot responde con un saludo.
-        *'Date'* - Muestra la fecha y hora actual.
-        *'!saludo'* - Te envía un saludo dependiendo de la hora del día.
-        *'!memide'* - Te responde con una medida aleatoria en cm.
-        *'!dado'* - Lanza un dado y te muestra el resultado.
-        *'!moneda'* - Lanza una moneda y te dice si salió cara o cruz.
-        *'!apodo'* - Te asigna un apodo aleatorio.
-        *'!suerte'* - Te genera números de la suerte.
+        *🤖Comandos disponibles:*
+        *!ayuda*
+        *!memide* 
+        *!dado*
+        *!moneda*
+        *!apodo* 
+        *!suerte*
+        *!everyone*
+        \n
+        *by: AF* 🤖
         `;
         msg.reply(ayuda);
         console.log('Comando !ayuda recibido');
     }
 });
 
-// Respuesta a 'Hola'
-client.on('message', msg => {
-    if (msg.body.toLowerCase() == 'hola') {
-        msg.reply('Hola, ¿cómo estás?🤖');
-        console.log('Comando "Hola" recibido y respondido');
-    }
-});
-
-// Fecha actual
-client.on('message', msg => {
-    if (msg.body.toLowerCase() == 'date') {
-        msg.reply('La fecha de hoy es: ' + new Date());
-        console.log('Comando "Date" recibido y respondido con la fecha actual');
-    }
-});
-
-// Saludo según la hora del día
-client.on('message', msg => {
-    if (msg.body.toLowerCase() == '!saludo') {
-        const hora = new Date().getHours();
-        let saludo;
-        if (hora < 12) {
-            saludo = '¡Buenos días!';
-        } else if (hora < 18) {
-            saludo = '¡Buenas tardes!';
-        } else {
-            saludo = '¡Buenas noches!';
-        }
-        msg.reply(saludo);
-        console.log('Comando "!saludo" recibido y respondido con el saludo apropiado');
-    }
-});
 
 // Medida aleatoria
 client.on('message', msg => {
     if (msg.body.toLowerCase() == '!memide') {
-        const randomNum = Math.floor(Math.random() * 23) + 1;
-        msg.reply(`Te mide: ${randomNum} cm`);
+        const randomNum = Math.floor(Math.random() * 20) + 1;
+        msg.reply(`🤖 Te mide: ${randomNum} cm`);
         console.log(`Comando "!memide" recibido, medida generada: ${randomNum} cm`);
     }
 });
@@ -83,7 +51,7 @@ client.on('message', msg => {
 client.on('message', msg => {
     if (msg.body.toLowerCase() == '!dado') {
         const dado = Math.floor(Math.random() * 6) + 1;
-        msg.reply(`Tiraste un dado y salió: ${dado}`);
+        msg.reply(`🤖 Tiraste un dado y salió: ${dado}`);
         console.log(`Comando "!dado" recibido, resultado del dado: ${dado}`);
     }
 });
@@ -92,7 +60,7 @@ client.on('message', msg => {
 client.on('message', msg => {
     if (msg.body.toLowerCase() == '!moneda') {
         const resultado = Math.random() < 0.5 ? 'Cara' : 'Cruz';
-        msg.reply(`La moneda cayó: ${resultado}`);
+        msg.reply(`🤖 La moneda cayó: ${resultado}`);
         console.log(`Comando "!moneda" recibido, resultado: ${resultado}`);
     }
 });
@@ -102,13 +70,40 @@ client.on('message', msg => {
     if (msg.body.toLowerCase() == '!apodo') {
         const apodos = [
             "El Destructor de Teclados",
-            "La Leyenda del Chat",
-            "El Maestro del WhatsApp",
-            "El Rey del Humor",
-            "La Bestia del Ping-Pong"
+            "El Mama Burra",
+            "El piñuo",
+            "El sopa esquinas *",
+            "sin soplo no hay paraiso",
+            "@stiven",
+            "Viloria Store",
+            "El culo e mono",
+            "El Pata e perro",
+            "tajadita",
+            "pan viejo",
+            "Eguayabita",
+            "arepero",
+            "la niña emilia",
+            "cuatro onzas",
+            "la frutiño",
+            "el sobaco alegre",
+            "El culo e mono",
+            "el boca e mojarra",
+            "la ballena",
+            "La pajarita",
+            "gelatina sin sabor",
+            "TNT: Tronco e nariz tablúa",
+            "El sopita en botella",
+            "la chucha awá",
+            "la 24 horas",
+            "100 pesos de cebollin",
+            "7 leches",
+            "pichon de paloma",
+            "ñango estrecho",
+            "sopita de menudencia ",
+            "la muslita e pollo",
         ];
         const randomApodo = apodos[Math.floor(Math.random() * apodos.length)];
-        msg.reply(`Tu nuevo apodo es: ${randomApodo}`);
+        msg.reply(`🤖 Tu apodo es: ${randomApodo}`);
         console.log(`Comando "!apodo" recibido, apodo generado: ${randomApodo}`);
     }
 });
@@ -116,9 +111,33 @@ client.on('message', msg => {
 // Números de la suerte
 client.on('message', msg => {
     if (msg.body.toLowerCase() == '!suerte') {
-        const numerosDeLaSuerte = Array.from({ length: 5 }, () => Math.floor(Math.random() * 50) + 1);
-        msg.reply(`Tus números de la suerte son: ${numerosDeLaSuerte.join(', ')}`);
+        const numerosDeLaSuerte = Array.from({ length: 5 }, () => Math.floor(Math.random() * 99) + 1);
+        msg.reply(`🤖 Tus números de la suerte son: ${numerosDeLaSuerte.join(', ')}`);
         console.log(`Comando "!suerte" recibido, números generados: ${numerosDeLaSuerte.join(', ')}`);
+    }
+});
+
+// Mencionar a todos los miembros del grupo con !everyone
+client.on('message', async msg => {
+    if (msg.body.toLowerCase() === '!everyone') {
+        const chat = await msg.getChat();
+        
+        if (chat.isGroup) {
+            // Obtener todos los participantes del grupo
+            const mentions = [];
+
+            for (let participant of chat.participants) {
+                mentions.push(participant.id._serialized);
+            }
+
+            // Enviar el mensaje mencionando a todos
+            await chat.sendMessage('¡@everyone!', {
+                mentions: mentions
+            });
+            console.log('Comando "!everyone" ejecutado');
+        } else {
+            msg.reply('Este comando solo funciona en grupos.');
+        }
     }
 });
 
