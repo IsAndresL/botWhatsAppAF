@@ -117,29 +117,28 @@ client.on('message', msg => {
     }
 });
 
-// Mencionar a todos los miembros del grupo con !everyone
 client.on('message', async msg => {
-    if (msg.body.toLowerCase() === '!everyone') {
-        const chat = await msg.getChat();
-        
-        if (chat.isGroup) {
-            // Obtener todos los participantes del grupo
+    const chat = await msg.getChat(); // Obtenemos el chat del mensaje
+
+    // Verificamos si es un grupo
+    if (chat.isGroup) {
+        if (msg.body.toLowerCase() == '!everyone') {
             const mentions = [];
-
+            let text = '';
+            // Recorrer todos los participantes del grupo
             for (let participant of chat.participants) {
-                mentions.push(participant.id._serialized);
+                const contact = await client.getContactById(participant.id._serialized);
+                mentions.push(contact);
+                text += `@${participant.id.user} `; // Esto crea el mensaje con las menciones
             }
-
-            // Enviar el mensaje mencionando a todos
-            await chat.sendMessage('¡@everyone!', {
-                mentions: mentions
-            });
-            console.log('Comando "!everyone" ejecutado');
-        } else {
-            msg.reply('Este comando solo funciona en grupos.');
+            await chat.sendMessage(text, { mentions });
+            console.log('Comando "!everyone" ejecutado en grupo');
         }
+    } else {
+        msg.reply('Este comando solo funciona en grupos.');
     }
 });
+
 
 // Inicia el cliente
 client.initialize();
